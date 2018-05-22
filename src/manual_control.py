@@ -100,17 +100,17 @@ def make_carla_settings(args):
     settings.randomize_seeds()
     camera0 = sensor.Camera('CameraRGB')
     camera0.set_image_size(WINDOW_WIDTH, WINDOW_HEIGHT)
-    camera0.set_position(1.0, 0.0, 1.4)
+    camera0.set_position(1.25, 0.0, 1.4)
     camera0.set_rotation(0.0, 0.0, 0.0)
     settings.add_sensor(camera0)
     camera1 = sensor.Camera('CameraDepth', PostProcessing='Depth')
-    camera1.set_image_size(WINDOW_WIDTH, WINDOW_WIDTH)
-    camera1.set_position(1.0, 0.0, 1.4)
+    camera1.set_image_size(WINDOW_WIDTH, WINDOW_HEIGHT)
+    camera1.set_position(1.25, 0.0, 1.4)
     camera1.set_rotation(0.0, 0.0, 0.0)
     settings.add_sensor(camera1)
     camera2 = sensor.Camera('CameraSemSeg', PostProcessing='SemanticSegmentation')
-    camera2.set_image_size(WINDOW_WIDTH, WINDOW_WIDTH)
-    camera2.set_position(1.0, 0.0, 1.4)
+    camera2.set_image_size(WINDOW_WIDTH, WINDOW_HEIGHT)
+    camera2.set_position(1.25, 0.0, 1.4)
     camera2.set_rotation(0.0, 0.0, 0.0)
     settings.add_sensor(camera2)
     if args.lidar:
@@ -125,6 +125,7 @@ def make_carla_settings(args):
             UpperFovLimit=10,
             LowerFovLimit=-30)
         settings.add_sensor(lidar)
+    settings.NumberOfVehicles = 150
     return settings
 
 
@@ -325,7 +326,7 @@ class CarlaGame(object):
         mini_image_y = WINDOW_HEIGHT - MINI_WINDOW_HEIGHT - gap_x
 
         if self._save_data \
-           and (current_milli_time() - self._last_save_time) > 500 \
+           and (current_milli_time() - self._last_save_time) > 200 \
            and self._main_image is not None \
            and self._mini_view_image1 is not None \
            and self._mini_view_image2 is not None:
